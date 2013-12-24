@@ -110,6 +110,11 @@ The config
 	</appSettings>
 
 ---
+Config on AppHarbor
+
+![Snippet](email_config.png)
+
+---
 ##Production defect
 ---
 Error details shown on AppHarbor
