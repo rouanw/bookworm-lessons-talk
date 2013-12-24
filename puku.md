@@ -287,3 +287,13 @@ Make it pass
 	    return View(bookInformation);
 	}
 
+---
+Custom error pages - web.config
+
+   <system.web>
+      <customErrors mode="RemoteOnly" defaultRedirect="/InternalError.html">
+        <error statusCode="404" redirect="/NotFound.html" />
+        <error statusCode="500" redirect="/InternalError.html" />
+      </customErrors>
+      ...
+	 </system.web>

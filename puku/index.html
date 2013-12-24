@@ -331,7 +331,19 @@ public ViewResult Details(int id)
     ViewBag.MetaDescription = bookInformation.Summary(155);
     return View(bookInformation);
 }
-</code></pre>
+</code></pre></div>
+      <div class='step' >
+    
+<p>Custom error pages - web.config</p>
+
+<p><system.web>
+      <customErrors mode="RemoteOnly" defaultRedirect="/InternalError.html">
+        <error statusCode="404" redirect="/NotFound.html" />
+        <error statusCode="500" redirect="/InternalError.html" />
+      </customErrors>
+      ...
+     </system.web></p>
+
       </div>
     <script src="js/impress.js"></script>
     <script>impress().init();</script>
