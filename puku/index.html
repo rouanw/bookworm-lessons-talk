@@ -358,11 +358,74 @@ public ViewResult Details(int id)
 </div>
       <div class='step' >
     
-<p>Don&#39;t hard code path</p>
+<p>Don&#39;t hard code host in emails to users</p>
 
-<p><a href="https://github.com/ThoughtWorksZA/bookworm/commit/07a06dec17b860b2f5e3a82517b02c9502504465">https://github.com/ThoughtWorksZA/bookworm/commit/07a06dec17b860b2f5e3a82517b02c9502504465</a>
-<a href="https://github.com/ThoughtWorksZA/bookworm/commit/070da901eb7a3620514109d09d26f15731ddf5a7">https://github.com/ThoughtWorksZA/bookworm/commit/070da901eb7a3620514109d09d26f15731ddf5a7</a></p>
+<ul>
+<li>Open source</li>
+<li>Testing</li>
+</ul>
 
+<!--
+https://github.com/ThoughtWorksZA/bookworm/commit/07a06dec17b860b2f5e3a82517b02c9502504465
+https://github.com/ThoughtWorksZA/bookworm/commit/070da901eb7a3620514109d09d26f15731ddf5a7
+-->
+</div>
+      <div class='step' >
+    
+<p>EmailService to get host from CurrentHttpContextWrapper</p>
+<pre><code class='prettyprint '>[TestMethod]
+public void ShouldGetBaseUrlFromCurrentHttpContextWrapper()
+{
+    _currentHttpContextWrapper.Setup(it => it.GetBaseUrl()).Returns("someUrl");
+    _emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
+    _smtpClientWrapper.Verify(it => it.Send(It.Is<MailMessage>(mail => mail.Body.Contains("someUrl/Users/1/RegisterConfirmation/security")),
+        It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(), It.IsAny<NetworkCredential>()));
+}
+</code></pre></div>
+      <div class='step' >
+    
+<p>The ContextWrapper</p>
+<pre><code class='prettyprint '>public class CurrentHttpContextWrapper
+{
+    public virtual string GetBaseUrl()
+    {
+        var urlFormattingHelper = new UrlFormattingHelper();
+        return urlFormattingHelper.GetBaseUrl(System.Web.HttpContext.Current.Request.Url);
+    }
+}
+</code></pre></div>
+      <div class='step' >
+    
+<p>Put the logic somewhere you can test</p>
+<pre><code class='prettyprint '>[TestClass]
+class UrlFormattingHelperTests
+{
+    [TestMethod]
+    public void ShouldCombineSchemeAndAuthority()
+    {
+        var helper = new UrlFormattingHelper();
+        var baseUrl = helper.GetBaseUrl(new Uri("http://localhost:1234/soup"));
+        baseUrl.Should().Be("http://localhost:1234");
+    }
+}
+</code></pre></div>
+      <div class='step' >
+    
+<p>But AppHarbor does load balancing...</p>
+
+<p><a href="http://puku-staging.apphb.com:16140/Users/321/RegisterConfirmation/">http://puku-staging.apphb.com:16140/Users/321/RegisterConfirmation/</a>...</p>
+</div>
+      <div class='step' >
+    
+<p>Web.config
+    <appSettings>
+     ...
+     <add key="aspnet:UseHostHeaderForRequestUrl" value="true" />
+     ...
+    </appSettings></p>
+</div>
+      <div class='step' >
+    
       </div>
     <script src="js/impress.js"></script>
     <script>impress().init();</script>

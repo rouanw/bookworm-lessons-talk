@@ -308,7 +308,64 @@ Custom error pages - web.config
 ![Snippet](404.png)
 
 ---
-Don't hard code path
+Don't hard code host in emails to users
 
+- Open source
+- Testing
+
+<!--
 https://github.com/ThoughtWorksZA/bookworm/commit/07a06dec17b860b2f5e3a82517b02c9502504465
 https://github.com/ThoughtWorksZA/bookworm/commit/070da901eb7a3620514109d09d26f15731ddf5a7
+-->
+---
+EmailService to get host from CurrentHttpContextWrapper
+
+	[TestMethod]
+	public void ShouldGetBaseUrlFromCurrentHttpContextWrapper()
+	{
+	    _currentHttpContextWrapper.Setup(it => it.GetBaseUrl()).Returns("someUrl");
+	    _emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
+	    _smtpClientWrapper.Verify(it => it.Send(It.Is<MailMessage>(mail => mail.Body.Contains("someUrl/Users/1/RegisterConfirmation/security")),
+	        It.IsAny<string>(), It.IsAny<int>(), It.IsAny<bool>(), It.IsAny<NetworkCredential>()));
+	}
+
+---
+The ContextWrapper
+
+	public class CurrentHttpContextWrapper
+	{
+	    public virtual string GetBaseUrl()
+	    {
+	        var urlFormattingHelper = new UrlFormattingHelper();
+	        return urlFormattingHelper.GetBaseUrl(System.Web.HttpContext.Current.Request.Url);
+	    }
+	}
+
+---
+Put the logic somewhere you can test
+
+ 	[TestClass]
+	class UrlFormattingHelperTests
+	{
+	    [TestMethod]
+	    public void ShouldCombineSchemeAndAuthority()
+	    {
+	        var helper = new UrlFormattingHelper();
+	        var baseUrl = helper.GetBaseUrl(new Uri("http://localhost:1234/soup"));
+	        baseUrl.Should().Be("http://localhost:1234");
+	    }
+	}
+
+---
+But AppHarbor does load balancing...
+
+http://puku-staging.apphb.com:16140/Users/321/RegisterConfirmation/...
+
+---
+Web.config
+	<appSettings>
+	 ...
+	 <add key="aspnet:UseHostHeaderForRequestUrl" value="true" />
+	 ...
+	</appSettings>
+ ---
