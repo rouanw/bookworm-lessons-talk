@@ -308,4 +308,7 @@ Custom error pages - web.config
 ![Snippet](404.png)
 
 ---
+Don't hard code path
 
+https://github.com/ThoughtWorksZA/bookworm/commit/07a06dec17b860b2f5e3a82517b02c9502504465
+https://github.com/ThoughtWorksZA/bookworm/commit/070da901eb7a3620514109d09d26f15731ddf5a7
