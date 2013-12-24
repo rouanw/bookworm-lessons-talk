@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <link href="css/reset.css" rel="stylesheet" />
+    
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1024" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="shortcut icon" href="css/favicon.png" />
+    <link rel="apple-touch-icon" href="css/apple-touch-icon.png" />
+    <!-- Code Prettifier: -->
+<link href="css/highlight.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+    <link href="css/style.css" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,800italic,300,400,800' rel='stylesheet' type='text/css'>    
+
+
+  </head>
+
+  <body>
+  <div class="fallback-message">
+  <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+  <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+  </div>
+    <div id="impress">
+    <div class='step' >
+    
+<h1>Fixing some code</h1>
+
+<h2>On puku.co.za</h2>
+</div>
+      <div class='step' >
+    
+<p>Blank for now</p>
+</div>
+      <div class='step' >
+    
+<h2>Credentials in the source code</h2>
+</div>
+      <div class='step' >
+    
+<p>Spot the whoopsie</p>
+<pre><code class='prettyprint '>public void SendConfirmation(string from, string to, string securityToken, int userId)
+{
+    var client = new SmtpClient
+        {
+            Host = "smtp.gmail.com",
+            Port = 587,
+            EnableSsl = true,
+            Credentials = new NetworkCredential("pukusite@gmail.com", "b00ksRc00l")
+        };
+
+    var mm = new MailMessage(from, to, ConfirmationEmailSubject, string.Format(Template, userId, securityToken))
+        {
+            BodyEncoding = Encoding.UTF8,
+            DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
+        };
+    client.Send(mm);
+}
+</code></pre></div>
+      <div class='step' >
+    
+<p>Step 1 : Test the email service</p>
+</div>
+      <div class='step' >
+    
+<p>SmtpClientWrapper - for testing</p>
+<pre><code class='prettyprint '>public class SmtpClientWrapper
+{
+    public virtual void Send(MailMessage mailMessage, string host, int port, bool enableSsl,
+        NetworkCredential networkCredential)
+    {
+        var smtpClient = new SmtpClient
+        {
+            Host = host,
+            Port = port,
+            EnableSsl = enableSsl,
+            Credentials = networkCredential
+        };
+
+        smtpClient.Send(mailMessage);
+    }
+}
+</code></pre></div>
+      <div class='step' >
+    
+<p>Example test</p>
+<pre><code class='prettyprint '>  [TestMethod]
+  public void ShouldSendAnEmailUsingSmtpClientWrapper()
+  {
+      _emailService.SendConfirmation("from@thoughtworks.com", "to@thoughtworks.com", "security", 1);
+
+      _smtpClientWrapper.Verify(it => it.Send(It.IsAny<MailMessage>(), "smtp.gmail.com", 587, true,
+          It.IsAny<NetworkCredential>()));
+  }
+</code></pre></div>
+      <div class='step' >
+    
+<p>The new version</p>
+<pre><code class='prettyprint '>public EmailService(SmtpClientWrapper smtpClient = null, ConfigurationService configurationService = null)
+{
+    _smtpClient = smtpClient ?? new SmtpClientWrapper();
+    _configurationService = configurationService ?? new ConfigurationService();
+}
+
+public void SendConfirmation(string from, string to, string securityToken, int userId)
+{
+    var mailMessage = new MailMessage(from, to, ConfirmationEmailSubject, string.Format(Template, userId, securityToken))
+        {
+            BodyEncoding = Encoding.UTF8,
+            DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure
+        };
+    var networkCredential = new NetworkCredential(_configurationService.GetEmailSenderAddress(),
+        _configurationService.GetEmailSenderPassword());
+    _smtpClient.Send(mailMessage, "smtp.gmail.com", 587, true, networkCredential);
+}
+</code></pre></div>
+      <div class='step' >
+    
+<p>The configuration service - integration tests</p>
+<pre><code class='prettyprint '>[TestMethod]
+public void ShouldFetchEmailSenderAddressFromWebConfig()
+{
+    var configService = new ConfigurationService();
+    configService.GetEmailSenderAddress().Should().Be("test-address-value");
+}
+
+[TestMethod]
+public void ShouldFetchEmailSenderPasswordFromWebConfig()
+{
+    var configService = new ConfigurationService();
+    configService.GetEmailSenderPassword().Should().Be("test-password-value");
+}
+</code></pre></div>
+      <div class='step' >
+    
+<p>The config</p>
+<pre><code class='prettyprint '><appSettings>
+  ...
+  <add key="emailSenderAddress" value="test-address-value"/>
+  <add key="emailSenderPassword" value="test-password-value"/>
+</appSettings>
+</code></pre></div>
+      <div class='step' >
+    
+<h2>Production defect</h2>
+</div>
+      <div class='step' >
+    
+<p>Error details shown on AppHarbor</p>
+<pre><code class='prettyprint '>    Time
+    12/23/13 10:14 AM
+
+    Request path
+    /Books/4449/Louba-sebapadi-sa-bolo-se-senyenyane
+
+    Commit id
+    ab8e9c57156fecbec47e5e0dc9e20fc0d5c8dad5
+
+    Message
+    An unhandled exception has occurred.
+
+    Exceptions
+    [ArgumentOutOfRangeException: Length cannot be less than
+     zero. Parameter name: length]
+       at System.String.InternalSubStringWithChecks(Int32 startIndex, Int32 length, Boolean fAlwaysCopy)
+       at BookWorm.ViewModels.BookInformation.Summary(Int32 characters) in d:\temp\wqfl5nkd.eis\input\BookWorm\ViewModels\BookInformation.cs:line 100
+       at BookWorm.Controllers.BooksController.Details(Int32 id) in 
+</code></pre></div>
+      <div class='step' >
+    
+<p>The method throwing the exception</p>
+<pre><code class='prettyprint '>    public string Summary(int characters)
+    {
+        if (Model.Description == null || Model.Description.Length < characters)
+            return Model.Description;
+        return Model.Description.Substring(0, Model.Description.IndexOf(" ", characters));
+    }
+</code></pre></div>
+      <div class='step' >
+    
+<p>No tests. Lets add some. #1</p>
+<pre><code class='prettyprint '>[TestMethod]
+public void SummaryShouldReturnBookDescriptionIfItsNull()
+{
+    var bookInformation = new BookInformation
+    {
+        Model = new Book
+        {
+            Description = null
+        }
+    };
+    bookInformation.Summary(150).Should().Be(null);
+}
+</code></pre></div>
+      <div class='step' >
+    
+<p>Test #2</p>
+<pre><code class='prettyprint '>[TestMethod]
+public void SummaryShouldReturnBookDescriptionWhenItsShorterThanTheSummaryLengthRequested()
+{
+    var bookInformation = new BookInformation
+    {
+        Model = new Book
+        {
+            Description = "four"
+        }
+    };
+    bookInformation.Summary(5).Should().Be("four");
+}
+</code></pre></div>
+      <div class='step' >
+    
+<p>Test #3</p>
+<pre><code class='prettyprint '>[TestMethod]
+public void SummaryShouldReturnTheBookDescriptionUpToTheFirstSpaceAfterTheCharacterLimitRequested()
+{
+    var bookInformation = new BookInformation
+    {
+        Model = new Book
+        {
+            Description = "word word"
+        }
+    };
+    bookInformation.Summary(2).Should().Be("word");
+}
+</code></pre></div>
+      <div class='step' >
+    
+<p>Now our failing test</p>
+<pre><code class='prettyprint '>[TestMethod]
+public void SummaryShouldReturnTheBookDescriptionTruncatedToTheCharacterLimitIfThereAreNoSpacesAfterTheLimit()
+{
+    var bookInformation = new BookInformation
+    {
+        Model = new Book
+        {
+            Description = "wordword"
+        }
+    };
+    bookInformation.Summary(4).Should().Be("word");
+}
+</code></pre></div>
+      <div class='step' >
+    
+<p>Make the code pass</p>
+
+<p><img src="fix_slug_bug.png" alt="Snippet"></p>
+
+      </div>
+    <script src="js/impress.js"></script>
+    <script>impress().init();</script>
+  </body>
+</html>
+    
