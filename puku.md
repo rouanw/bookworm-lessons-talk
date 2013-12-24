@@ -288,6 +288,12 @@ Make it pass
 	}
 
 ---
+##Unfriendly error pages
+
+---
+![Snippet](bad404.png)
+
+---
 Custom error pages - web.config
 
    <system.web>
@@ -297,3 +303,9 @@ Custom error pages - web.config
       </customErrors>
       ...
 	 </system.web>
+
+---
+![Snippet](404.png)
+
+---
+
