@@ -152,6 +152,20 @@ public void ShouldFetchEmailSenderPasswordFromWebConfig()
 </div>
       <div class='step' >
     
+<p>But now we&#39;ve broken the dev environment!</p>
+
+<p><appSettings>
+    ...
+    <add key="emailServerAddress" value="localhost"/>
+    <add key="emailEnableSsl" value="false"/>
+  </appSettings></p>
+</div>
+      <div class='step' >
+    
+<p><img src="papercut.png" alt="Snippet"></p>
+</div>
+      <div class='step' >
+    
 <h2>Production defect</h2>
 </div>
       <div class='step' >

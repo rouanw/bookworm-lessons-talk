@@ -115,7 +115,20 @@ Config on AppHarbor
 ![Snippet](email_config.png)
 
 ---
+But now we've broken the dev environment!
+
+  <appSettings>
+  	...
+    <add key="emailServerAddress" value="localhost"/>
+    <add key="emailEnableSsl" value="false"/>
+  </appSettings>
+
+---
+![Snippet](papercut.png)
+
+---
 ##Production defect
+
 ---
 Error details shown on AppHarbor
 
