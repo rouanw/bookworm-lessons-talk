@@ -153,6 +153,10 @@ public void ShouldFetchEmailSenderPasswordFromWebConfig()
       <div class='step' >
     
 <p>But now we&#39;ve broken the dev environment!</p>
+</div>
+      <div class='step' >
+    
+<p>web.config</p>
 
 <p><appSettings>
     ...
@@ -269,7 +273,65 @@ public void SummaryShouldReturnTheBookDescriptionTruncatedToTheCharacterLimitIfT
 <p>Make the code pass</p>
 
 <p><img src="fix_slug_bug.png" alt="Snippet"></p>
+</div>
+      <div class='step' >
+    
+<h2>500 instead of 404</h2>
 
+<p><a href="http://www.puku.co.za/Books/1234">www.puku.co.za/Books/1234</a></p>
+
+<!---
+https://github.com/ThoughtWorksZA/bookworm/commit/8b6b60563b950699d400803191494fdc09b2f5d3
+-->
+</div>
+      <div class='step' >
+    
+<p>Code with bug</p>
+<pre><code class='prettyprint '>[AllowAnonymous]
+public ViewResult Details(int id)
+{
+    var book = Repository.Get<Book>(id);
+    var bookInformation = new BookInformation(book, book.Posts.Select(post => new BookPostInformation(book.Id, post)).ToList());
+    ViewBag.Title = bookInformation.Model.Title;
+    ViewBag.MetaDescription = bookInformation.Summary(155);
+    return View(bookInformation);
+}
+</code></pre></div>
+      <div class='step' >
+    
+<p>Failing test</p>
+<pre><code class='prettyprint '>[TestMethod]
+public void DetailsShouldThrowA404ExceptionWhenBookIsNotFound()
+{
+    var repo = new Mock<Repository>();
+    repo.Setup(it => it.Get<Book>(1)).Returns((Book)null);
+    var booksController = new BooksController(repo.Object);
+
+    Action getDetails = () => booksController.Details(1);
+
+    getDetails.ShouldThrow<HttpException>().WithMessage("The requested book could not be found").Where(it => it.GetHttpCode() == 404);
+}
+</code></pre></div>
+      <div class='step' >
+    
+<p>Make it pass</p>
+<pre><code class='prettyprint '>[AllowAnonymous]
+public ViewResult Details(int id)
+{
+    var book = Repository.Get<Book>(id);
+
+    if (book == null)
+    {
+        throw new HttpException(404, "The requested book could not be found");
+    }
+
+    var bookPosts = book.Posts.Select(post => new BookPostInformation(book.Id, post)).ToList();
+    var bookInformation = new BookInformation(book, bookPosts);
+    ViewBag.Title = bookInformation.Model.Title;
+    ViewBag.MetaDescription = bookInformation.Summary(155);
+    return View(bookInformation);
+}
+</code></pre>
       </div>
     <script src="js/impress.js"></script>
     <script>impress().init();</script>

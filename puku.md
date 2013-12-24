@@ -117,6 +117,9 @@ Config on AppHarbor
 ---
 But now we've broken the dev environment!
 
+---
+web.config
+
   <appSettings>
   	...
     <add key="emailServerAddress" value="localhost"/>
@@ -228,4 +231,59 @@ Now our failing test
 Make the code pass
 
 ![Snippet](fix_slug_bug.png)
+
+---
+
+## 500 instead of 404
+www.puku.co.za/Books/1234
+
+<!---
+https://github.com/ThoughtWorksZA/bookworm/commit/8b6b60563b950699d400803191494fdc09b2f5d3
+-->
+---
+Code with bug
+
+	[AllowAnonymous]
+	public ViewResult Details(int id)
+	{
+	    var book = Repository.Get<Book>(id);
+	    var bookInformation = new BookInformation(book, book.Posts.Select(post => new BookPostInformation(book.Id, post)).ToList());
+	    ViewBag.Title = bookInformation.Model.Title;
+	    ViewBag.MetaDescription = bookInformation.Summary(155);
+	    return View(bookInformation);
+	}
+---
+Failing test
+
+	[TestMethod]
+	public void DetailsShouldThrowA404ExceptionWhenBookIsNotFound()
+	{
+	    var repo = new Mock<Repository>();
+	    repo.Setup(it => it.Get<Book>(1)).Returns((Book)null);
+	    var booksController = new BooksController(repo.Object);
+	    
+	    Action getDetails = () => booksController.Details(1);
+
+	    getDetails.ShouldThrow<HttpException>().WithMessage("The requested book could not be found").Where(it => it.GetHttpCode() == 404);
+	}
+
+---
+Make it pass
+
+	[AllowAnonymous]
+	public ViewResult Details(int id)
+	{
+	    var book = Repository.Get<Book>(id);
+
+	    if (book == null)
+	    {
+	        throw new HttpException(404, "The requested book could not be found");
+	    }
+
+	    var bookPosts = book.Posts.Select(post => new BookPostInformation(book.Id, post)).ToList();
+	    var bookInformation = new BookInformation(book, bookPosts);
+	    ViewBag.Title = bookInformation.Model.Title;
+	    ViewBag.MetaDescription = bookInformation.Summary(155);
+	    return View(bookInformation);
+	}
 
