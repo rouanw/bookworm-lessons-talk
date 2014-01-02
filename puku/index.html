@@ -139,11 +139,11 @@ public void ShouldFetchEmailSenderPasswordFromWebConfig()
       <div class='step' >
     
 <p>The config</p>
-<pre><code class='prettyprint '><appSettings>
+<pre><code class='prettyprint '>&lt;appSettings&gt;
   ...
-  <add key="emailSenderAddress" value="test-address-value"/>
-  <add key="emailSenderPassword" value="test-password-value"/>
-</appSettings>
+  &lt;add key="emailSenderAddress" value="test-address-value"/&gt;
+  &lt;add key="emailSenderPassword" value="test-password-value"/&gt;
+&lt;/appSettings&gt;
 </code></pre></div>
       <div class='step' >
     
@@ -158,12 +158,12 @@ public void ShouldFetchEmailSenderPasswordFromWebConfig()
       <div class='step' >
     
 <p>web.config</p>
-
-<p><appSettings>
-    ...
-    <add key="emailServerAddress" value="localhost"/>
-    <add key="emailEnableSsl" value="false"/>
-  </appSettings></p>
+<pre><code class='prettyprint '>&lt;appSettings&gt;
+...
+&lt;add key="emailServerAddress" value="localhost"/&gt;
+&lt;add key="emailEnableSsl" value="false"/&gt;
+</code></pre>
+<p>&lt;/appSettings&gt;</p>
 </div>
       <div class='step' >
     
@@ -344,15 +344,14 @@ public ViewResult Details(int id)
       <div class='step' >
     
 <p>Custom error pages - web.config</p>
-
-<p><system.web>
-      <customErrors mode="RemoteOnly" defaultRedirect="/InternalError.html">
-        <error statusCode="404" redirect="/NotFound.html" />
-        <error statusCode="500" redirect="/InternalError.html" />
-      </customErrors>
-      ...
-     </system.web></p>
-</div>
+<pre><code class='prettyprint '>&lt;system.web&gt;
+    &lt;customErrors mode="RemoteOnly" defaultRedirect="/InternalError.html"&gt;
+        &lt;error statusCode="404" redirect="/NotFound.html" /&gt;
+        &lt;error statusCode="500" redirect="/InternalError.html" /&gt;
+    &lt;/customErrors&gt;
+    ...
+&lt;/system.web&gt;
+</code></pre></div>
       <div class='step' >
     
 <p><img src="404.png" alt="Snippet"></p>
@@ -418,13 +417,13 @@ class UrlFormattingHelperTests
 </div>
       <div class='step' >
     
-<p>Web.config
-    <appSettings>
-     ...
-     <add key="aspnet:UseHostHeaderForRequestUrl" value="true" />
-     ...
-    </appSettings></p>
-</div>
+<p>Web.config</p>
+<pre><code class='prettyprint '>&lt;appSettings&gt;
+ ...
+ &lt;add key="aspnet:UseHostHeaderForRequestUrl" value="true" /&gt;
+ ...
+&lt;/appSettings&gt;
+</code></pre></div>
       <div class='step' >
     
       </div>

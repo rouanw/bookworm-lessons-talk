@@ -105,11 +105,11 @@ The configuration service - integration tests
 ---
 The config
 
-	<appSettings>
+	&lt;appSettings&gt;
 	  ...
-	  <add key="emailSenderAddress" value="test-address-value"/>
-	  <add key="emailSenderPassword" value="test-password-value"/>
-	</appSettings>
+	  &lt;add key="emailSenderAddress" value="test-address-value"/&gt;
+	  &lt;add key="emailSenderPassword" value="test-password-value"/&gt;
+	&lt;/appSettings&gt;
 
 ---
 Config on AppHarbor
@@ -122,11 +122,11 @@ But now we've broken the dev environment!
 ---
 web.config
 
-  <appSettings>
+	&lt;appSettings&gt;
   	...
-    <add key="emailServerAddress" value="localhost"/>
-    <add key="emailEnableSsl" value="false"/>
-  </appSettings>
+    &lt;add key="emailServerAddress" value="localhost"/&gt;
+    &lt;add key="emailEnableSsl" value="false"/&gt;
+  &lt;/appSettings&gt;
 
 ---
 ![Snippet](papercut.png)
@@ -298,13 +298,13 @@ Make it pass
 ---
 Custom error pages - web.config
 
-   <system.web>
-      <customErrors mode="RemoteOnly" defaultRedirect="/InternalError.html">
-        <error statusCode="404" redirect="/NotFound.html" />
-        <error statusCode="500" redirect="/InternalError.html" />
-      </customErrors>
-      ...
-	 </system.web>
+	&lt;system.web&gt;
+		&lt;customErrors mode="RemoteOnly" defaultRedirect="/InternalError.html"&gt;
+			&lt;error statusCode="404" redirect="/NotFound.html" /&gt;
+			&lt;error statusCode="500" redirect="/InternalError.html" /&gt;
+		&lt;/customErrors&gt;
+		...
+ 	&lt;/system.web&gt;
 
 ---
 ![Snippet](404.png)
@@ -365,9 +365,10 @@ http://puku-staging.apphb.com:16140/Users/321/RegisterConfirmation/...
 
 ---
 Web.config
-	<appSettings>
+
+	&lt;appSettings&gt;
 	 ...
-	 <add key="aspnet:UseHostHeaderForRequestUrl" value="true" />
+	 &lt;add key="aspnet:UseHostHeaderForRequestUrl" value="true" /&gt;
 	 ...
-	</appSettings>
+	&lt;/appSettings&gt;
  ---
