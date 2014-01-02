@@ -1,6 +1,8 @@
 #Fixing some code
 ##On puku.co.za
 
+<!-- Compile using  mdpress -a -s obtvse puku.md -->
+
 ---
 Blank for now
 
