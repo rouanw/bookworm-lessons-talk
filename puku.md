@@ -1,5 +1,5 @@
-#Fixing some code
-##On puku.co.za
+##Fixing some code
+###Lessons from puku.co.za
 
 <!-- Compile using  mdpress -a -s obtvse puku.md -->
 
@@ -106,9 +106,9 @@ The configuration service - integration tests
 The config
 
 	&lt;appSettings&gt;
-	  ...
-	  &lt;add key="emailSenderAddress" value="test-address-value"/&gt;
-	  &lt;add key="emailSenderPassword" value="test-password-value"/&gt;
+		...
+		&lt;add key="emailSenderAddress" value="test-address-value"/&gt;
+		&lt;add key="emailSenderPassword" value="test-password-value"/&gt;
 	&lt;/appSettings&gt;
 
 ---
@@ -123,10 +123,10 @@ But now we've broken the dev environment!
 web.config
 
 	&lt;appSettings&gt;
-  	...
-    &lt;add key="emailServerAddress" value="localhost"/&gt;
-    &lt;add key="emailEnableSsl" value="false"/&gt;
-  &lt;/appSettings&gt;
+		...
+		&lt;add key="emailServerAddress" value="localhost"/&gt;
+		&lt;add key="emailEnableSsl" value="false"/&gt;
+	&lt;/appSettings&gt;
 
 ---
 ![Snippet](papercut.png)
@@ -309,6 +309,8 @@ Custom error pages - web.config
 ---
 ![Snippet](404.png)
 
+---
+## Hard coded host address
 ---
 Don't hard code host in emails to users
 

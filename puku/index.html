@@ -27,9 +27,9 @@
     <div id="impress">
     <div class='step' >
     
-<h1>Fixing some code</h1>
+<h2>Fixing some code</h2>
 
-<h2>On puku.co.za</h2>
+<h3>Lessons from puku.co.za</h3>
 
 <!-- Compile using  mdpress -a -s obtvse puku.md -->
 </div>
@@ -140,9 +140,9 @@ public void ShouldFetchEmailSenderPasswordFromWebConfig()
     
 <p>The config</p>
 <pre><code class='prettyprint '>&lt;appSettings&gt;
-  ...
-  &lt;add key="emailSenderAddress" value="test-address-value"/&gt;
-  &lt;add key="emailSenderPassword" value="test-password-value"/&gt;
+    ...
+    &lt;add key="emailSenderAddress" value="test-address-value"/&gt;
+    &lt;add key="emailSenderPassword" value="test-password-value"/&gt;
 &lt;/appSettings&gt;
 </code></pre></div>
       <div class='step' >
@@ -159,12 +159,11 @@ public void ShouldFetchEmailSenderPasswordFromWebConfig()
     
 <p>web.config</p>
 <pre><code class='prettyprint '>&lt;appSettings&gt;
-...
-&lt;add key="emailServerAddress" value="localhost"/&gt;
-&lt;add key="emailEnableSsl" value="false"/&gt;
-</code></pre>
-<p>&lt;/appSettings&gt;</p>
-</div>
+    ...
+    &lt;add key="emailServerAddress" value="localhost"/&gt;
+    &lt;add key="emailEnableSsl" value="false"/&gt;
+&lt;/appSettings&gt;
+</code></pre></div>
       <div class='step' >
     
 <p><img src="papercut.png" alt="Snippet"></p>
@@ -355,6 +354,10 @@ public ViewResult Details(int id)
       <div class='step' >
     
 <p><img src="404.png" alt="Snippet"></p>
+</div>
+      <div class='step' >
+    
+<h2>Hard coded host address</h2>
 </div>
       <div class='step' >
     
