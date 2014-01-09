@@ -174,6 +174,14 @@ web.config
 ---
 ![Snippet](papercut.png)
 
+
+---
+## What we've learnt
+
+* Use configuration variables for credentials (and other sensitive info)
+* Don't use the same password for everything
+* Be careful not to send real emails from dev/test environment
+
 ---
 ##Defect: 500 on some books
 
@@ -278,6 +286,11 @@ Make the code pass
 ![Snippet](fix_slug_bug.png)
 
 ---
+## What we've learnt
+
+* Monitor application logs for exceptions
+
+---
 
 ## Defect: 500 instead of 404
 www.puku.co.za/Books/1234
@@ -333,6 +346,12 @@ Make it pass
 	}
 
 ---
+## What we've learnt
+
+* Be wary of null / empty returns from methods
+* Keep HTTP standards in mind
+
+---
 ##Unfriendly error pages
 
 ---
@@ -351,6 +370,12 @@ Custom error pages - web.config
 
 ---
 ![Snippet](404.png)
+
+---
+## What we've learnt
+
+* Be nice to your users
+* Make sure your app can deal with problems gracefully
 
 ---
 ## Hard coded host address
@@ -416,4 +441,9 @@ Web.config
 	 &lt;add key="aspnet:UseHostHeaderForRequestUrl" value="true" /&gt;
 	 ...
 	&lt;/appSettings&gt;
- ---
+
+---
+## What we've learnt
+
+* Don't hard code things that can change without breaking tests
+* Keep potential open source users in mind

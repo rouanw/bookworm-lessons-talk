@@ -210,6 +210,16 @@ public void ShouldFetchEmailSenderPasswordFromWebConfig()
 </div>
       <div class='step' >
     
+<h2>What we&#39;ve learnt</h2>
+
+<ul>
+<li>Use configuration variables for credentials (and other sensitive info)</li>
+<li>Don&#39;t use the same password for everything</li>
+<li>Be careful not to send real emails from dev/test environment</li>
+</ul>
+</div>
+      <div class='step' >
+    
 <h2>Defect: 500 on some books</h2>
 </div>
       <div class='step' >
@@ -316,6 +326,14 @@ public void SummaryShouldReturnTheBookDescriptionTruncatedToTheCharacterLimitIfT
 </div>
       <div class='step' >
     
+<h2>What we&#39;ve learnt</h2>
+
+<ul>
+<li>Monitor application logs for exceptions</li>
+</ul>
+</div>
+      <div class='step' >
+    
 <h2>Defect: 500 instead of 404</h2>
 
 <p><a href="http://www.puku.co.za/Books/1234">www.puku.co.za/Books/1234</a></p>
@@ -374,6 +392,15 @@ public ViewResult Details(int id)
 </code></pre></div>
       <div class='step' >
     
+<h2>What we&#39;ve learnt</h2>
+
+<ul>
+<li>Be wary of null / empty returns from methods</li>
+<li>Keep HTTP standards in mind</li>
+</ul>
+</div>
+      <div class='step' >
+    
 <h2>Unfriendly error pages</h2>
 </div>
       <div class='step' >
@@ -394,6 +421,15 @@ public ViewResult Details(int id)
       <div class='step' >
     
 <p><img src="404.png" alt="Snippet"></p>
+</div>
+      <div class='step' >
+    
+<h2>What we&#39;ve learnt</h2>
+
+<ul>
+<li>Be nice to your users</li>
+<li>Make sure your app can deal with problems gracefully</li>
+</ul>
 </div>
       <div class='step' >
     
@@ -469,6 +505,13 @@ class UrlFormattingHelperTests
 </code></pre></div>
       <div class='step' >
     
+<h2>What we&#39;ve learnt</h2>
+
+<ul>
+<li>Don&#39;t hard code things that can change without breaking tests</li>
+<li>Keep potential open source users in mind</li>
+</ul>
+
       </div>
     <script src="js/impress.js"></script>
     <script>impress().init();</script>
