@@ -41,7 +41,13 @@ title: Puku - lessons learnt
 </div>
 
 ---
-Blank for now
+##What we'll cover
+
+* Credentials in the source code
+* Defect: 500 on some books
+* Defect: 500 instead of 404
+* Unfriendly error pages
+* Hard coded host address
 
 ---
 ##Credentials in the source code
@@ -170,7 +176,7 @@ web.config
 ![Snippet](papercut.png)
 
 ---
-##Production defect
+##Defect: 500 on some books
 
 ---
 Error details shown on AppHarbor
@@ -274,7 +280,7 @@ Make the code pass
 
 ---
 
-## 500 instead of 404
+## Defect: 500 instead of 404
 www.puku.co.za/Books/1234
 
 <!---
