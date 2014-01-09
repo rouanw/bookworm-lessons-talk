@@ -4,9 +4,8 @@ title: Puku - lessons learnt
 
 <style>
 	img{
-		max-height: 400px;
+		height: 550px;
 		margin: 20px;
-		float: left;
 	}
 
 	code{
