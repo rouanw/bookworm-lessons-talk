@@ -1,7 +1,44 @@
+---
+title: Puku - lessons learnt
+---
+
+<style>
+	img{
+		max-height: 400px;
+		margin: 20px;
+		float: left;
+	}
+
+	code{
+		font-size: 20px;
+	}
+
+	.corner-box{
+		text-align: right;
+		position: fixed;
+		right: 0;
+		bottom: 0;
+		background-color: rgb(225,225,225);
+		padding: 20px;
+		border-radius: 15px;
+		border: 1px solid rgb(200,200,200);
+	}
+
+	.corner-box img{
+		height: 50px;
+	}
+</style>
+
 ##Fixing some code
 ###Lessons from puku.co.za
 
 <!-- Compile using  mdpress -a -s obtvse puku.md -->
+
+<div class="corner-box">
+	<p><a href="http://www.thoughtworks.com" ><img src="tw-logo.png"/></a></p>
+	<p>Rouan Wilsenach</p>
+	<p><a href="https://twitter.com/rouanw">@rouanw</a></p>
+</div>
 
 ---
 Blank for now
@@ -10,6 +47,7 @@ Blank for now
 ##Credentials in the source code
 ---
 Spot the whoopsie
+
 
 	public void SendConfirmation(string from, string to, string securityToken, int userId)
 	{
