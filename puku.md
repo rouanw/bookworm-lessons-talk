@@ -1,5 +1,5 @@
 ---
-title: Puku - lessons learnt
+title: Puku - lessons learned
 ---
 
 <!-- Compile using  mdpress -a -s obtvse puku.md -->
@@ -176,7 +176,7 @@ web.config
 
 
 ---
-## What we've learnt
+## What we've learned
 
 * Use configuration variables for credentials
 * Don't use the same password for everything
@@ -286,7 +286,7 @@ Make the code pass
 ![Snippet](fix_slug_bug.png)
 
 ---
-## What we've learnt
+## What we've learned
 
 * Monitor application logs for exceptions
 * Make sure the code you're changing is tested
@@ -348,7 +348,7 @@ Make it pass
 	}
 
 ---
-## What we've learnt
+## What we've learned
 
 * Be wary of null / empty returns from methods
 * Keep HTTP standards in mind
@@ -375,7 +375,7 @@ Custom error pages - web.config
 ![Snippet](404.png)
 
 ---
-## What we've learnt
+## What we've learned
 
 * Be nice to your users
 * Make sure your app can deal with problems gracefully
@@ -446,7 +446,7 @@ Web.config
 	&lt;/appSettings&gt;
 
 ---
-## What we've learnt
+## What we've learned
 
 * Don't hard code things that can change without breaking tests
 * Keep potential open source users in mind
