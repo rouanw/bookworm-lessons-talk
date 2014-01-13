@@ -2,6 +2,8 @@
 title: Puku - lessons learnt
 ---
 
+<!-- Compile using  mdpress -a -s obtvse puku.md -->
+
 <style>
 	img{
 		height: 550px;
@@ -30,8 +32,6 @@ title: Puku - lessons learnt
 
 ##Fixing some code
 ###Lessons from puku.co.za
-
-<!-- Compile using  mdpress -a -s obtvse puku.md -->
 
 <div class="corner-box">
 	<p><a href="http://www.thoughtworks.com" ><img src="tw-logo.png"/></a></p>
@@ -178,7 +178,7 @@ web.config
 ---
 ## What we've learnt
 
-* Use configuration variables for credentials (and other sensitive info)
+* Use configuration variables for credentials
 * Don't use the same password for everything
 * Be careful not to send real emails from dev/test environment
 
@@ -289,6 +289,8 @@ Make the code pass
 ## What we've learnt
 
 * Monitor application logs for exceptions
+* Make sure the code you're changing is tested
+* Write a failing test for the defective case
 
 ---
 
@@ -350,6 +352,7 @@ Make it pass
 
 * Be wary of null / empty returns from methods
 * Keep HTTP standards in mind
+* Write a failing test for the defective case
 
 ---
 ##Unfriendly error pages

@@ -27,6 +27,8 @@
     <div id="impress">
     <div class='step' >
     
+<!-- Compile using  mdpress -a -s obtvse puku.md -->
+
 <style>
     img{
         height: 550px;
@@ -56,8 +58,6 @@
 <h2>Fixing some code</h2>
 
 <h3>Lessons from puku.co.za</h3>
-
-<!-- Compile using  mdpress -a -s obtvse puku.md -->
 
 <div class="corner-box">
     <p><a href="http://www.thoughtworks.com" ><img src="tw-logo.png"/></a></p>
@@ -213,7 +213,7 @@ public void ShouldFetchEmailSenderPasswordFromWebConfig()
 <h2>What we&#39;ve learnt</h2>
 
 <ul>
-<li>Use configuration variables for credentials (and other sensitive info)</li>
+<li>Use configuration variables for credentials</li>
 <li>Don&#39;t use the same password for everything</li>
 <li>Be careful not to send real emails from dev/test environment</li>
 </ul>
@@ -330,6 +330,8 @@ public void SummaryShouldReturnTheBookDescriptionTruncatedToTheCharacterLimitIfT
 
 <ul>
 <li>Monitor application logs for exceptions</li>
+<li>Make sure the code you&#39;re changing is tested</li>
+<li>Write a failing test for the defective case</li>
 </ul>
 </div>
       <div class='step' >
@@ -397,6 +399,7 @@ public ViewResult Details(int id)
 <ul>
 <li>Be wary of null / empty returns from methods</li>
 <li>Keep HTTP standards in mind</li>
+<li>Write a failing test for the defective case</li>
 </ul>
 </div>
       <div class='step' >
