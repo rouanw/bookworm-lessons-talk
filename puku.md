@@ -181,6 +181,7 @@ web.config
 * Use configuration variables for credentials
 * Don't use the same password for everything
 * Be careful not to send real emails from dev/test environment
+* Have a staging email account
 
 ---
 ##Defect: 500 on some books
