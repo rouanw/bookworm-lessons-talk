@@ -30,8 +30,8 @@ title: Puku - lessons learned
 	}
 </style>
 
-##Fixing some code
-###Lessons from puku.co.za
+##Web App Dos and Don'ts
+###Lessons from the Bookworm project
 
 <div class="corner-box">
 	<p><a href="http://www.thoughtworks.com" ><img src="tw-logo.png"/></a></p>
